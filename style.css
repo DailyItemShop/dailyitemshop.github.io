@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1c1c1c;
+    color: #fff;
+}
+h1 {
+    margin-top: 20px;
+    color: #fff;
+}
+#searchContainer {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+#searchInput {
+    width: 60%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+}
+#searchButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: #4682b4;
+    color: white;
+}
+#itemShop {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #2e2e2e;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+#githubLink {
+    margin-top: 20px;
+    text-align: center;
+}
+#githubLink a {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+#githubLink a:hover {
+    background-color: #555;
+}
+.item {
+    padding: 15px;
+    border-bottom: 1px solid #444;
+}
+.item:last-child {
+    border-bottom: none;
+}
+.item h2 {
+    margin: 0 0 10px 0;
+}
+.rarity-common { background-color: #d3d3d3; color: #000; }
+.rarity-uncommon { background-color: #76b041; color: #fff; }
+.rarity-rare { background-color: #4682b4; color: #fff; }
+.rarity-epic { background-color: #a32cc4; color: #fff; }
+.rarity-legendary { background-color: #d89e00; color: #fff; }
+.rarity-marvel { background-color: #ff0000; color: #fff; }
+.item p {
+    margin: 5px 0;
+}
+.itemPrice {
+    font-weight: bold;
+}

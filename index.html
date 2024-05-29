@@ -3,176 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortnite Item Shop</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #1c1c1c;
-            color: #fff;
-        }
-        h1 {
-            margin-top: 20px;
-            color: #fff;
-        }
-        #searchContainer {
-            margin: 20px;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }
-        #searchInput {
-            width: 60%;
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-        }
-        #searchButton {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            margin-left: 10px;
-            cursor: pointer;
-            background-color: #4682b4;
-            color: white;
-        }
-        #itemShop {
-            width: 90%;
-            max-width: 800px;
-            margin: 20px;
-            padding: 20px;
-            background-color: #2e2e2e;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-        }
-        .item {
-            padding: 15px;
-            border-bottom: 1px solid #444;
-        }
-        .item:last-child {
-            border-bottom: none;
-        }
-        .item h2 {
-            margin: 0 0 10px 0;
-        }
-        .rarity-common { background-color: #d3d3d3; color: #000; }
-        .rarity-uncommon { background-color: #76b041; color: #fff; }
-        .rarity-rare { background-color: #4682b4; color: #fff; }
-        .rarity-epic { background-color: #a32cc4; color: #fff; }
-        .rarity-legendary { background-color: #d89e00; color: #fff; }
-        .rarity-marvel { background-color: #ff0000; color: #fff; }
-        .item p {
-            margin: 5px 0;
-        }
-        .itemPrice {
-            font-weight: bold;
-        }
-    </style>
+   
+    <title>Daily Item Shop</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Fortnite Item Shop</h1>
+    <h1>Daily Item Shop</h1>
+
     <div id="searchContainer">
         <input type="text" id="searchInput" placeholder="Search for a skin...">
         <button id="searchButton">Search</button>
     </div>
+
+    <div id="githubLink">
+        <a href="https://github.com/DailyItemShop/dailyitemshop.github.io" target="_blank">GitHub Repository</a>
+    </div>
+
     <div id="itemShop">Loading...</div>
 
-    <script>
-        async function fetchItemShop() {
-            try {
-                const response = await fetch('https://fortnite-api.com/v2/shop/br');
-                const data = await response.json();
-                const featuredItems = data?.data?.featured?.entries || [];
-                displayItemShop(removeDuplicates(featuredItems));
-                return featuredItems;
-            } catch (error) {
-                document.getElementById('itemShop').textContent = 'Failed to load item shop';
-                console.error('Error fetching item shop:', error);
-            }
-        }
-
-        function removeDuplicates(items) {
-            const seenNames = new Set();
-            const uniqueItems = [];
-            items.forEach(item => {
-                const itemName = item.bundle ? item.bundle.name : item.items[0].name;
-                if (!seenNames.has(itemName)) {
-                    seenNames.add(itemName);
-                    uniqueItems.push(item);
-                }
-            });
-            return uniqueItems;
-        }
-
-        function displayItemShop(items) {
-            const itemShopContainer = document.getElementById('itemShop');
-            itemShopContainer.innerHTML = '';
-
-            if (items.length === 0) {
-                itemShopContainer.textContent = 'No items available';
-                return;
-            }
-
-            items.forEach(item => {
-                const itemElement = document.createElement('div');
-                const rarityClass = `rarity-${item.items[0].rarity.value.toLowerCase()}`;
-                itemElement.classList.add('item', rarityClass);
-
-                const itemName = document.createElement('h2');
-                itemName.textContent = item.bundle ? item.bundle.name : item.items[0].name;
-
-                const itemType = document.createElement('p');
-                itemType.textContent = `Type: ${item.bundle ? 'Bundle' : item.items[0].type.value}`;
-
-                const itemDescription = document.createElement('p');
-                itemDescription.textContent = item.items[0].description || 'No description available';
-
-                const itemPrice = document.createElement('p');
-                itemPrice.classList.add('itemPrice');
-                itemPrice.textContent = `Price: ${item.finalPrice} V-Bucks`;
-
-                itemElement.appendChild(itemName);
-                itemElement.appendChild(itemType);
-                itemElement.appendChild(itemDescription);
-                itemElement.appendChild(itemPrice);
-
-                if (item.bundle) {
-                    const bundleContents = document.createElement('div');
-                    bundleContents.innerHTML = '<strong>Bundle Contents:</strong>';
-                    item.items.forEach(subItem => {
-                        const subItemElement = document.createElement('p');
-                        subItemElement.textContent = `${subItem.name} (Type: ${subItem.type.value})`;
-                        bundleContents.appendChild(subItemElement);
-                    });
-                    itemElement.appendChild(bundleContents);
-                }
-
-                itemShopContainer.appendChild(itemElement);
-            });
-        }
-
-        function searchItems(items, query) {
-            const lowerCaseQuery = query.toLowerCase();
-            const filteredItems = items.filter(item => 
-                item.bundle ? 
-                item.bundle.name.toLowerCase().includes(lowerCaseQuery) :
-                item.items.some(subItem => subItem.name.toLowerCase().includes(lowerCaseQuery))
-            );
-            displayItemShop(removeDuplicates(filteredItems));
-        }
-
-        document.getElementById('searchButton').addEventListener('click', () => {
-            const query = document.getElementById('searchInput').value;
-            fetchItemShop().then(items => searchItems(items, query));
-        });
-
-        fetchItemShop();
-    </script>
+    <script src="fetch.js"></script>
 </body>
 </html>
